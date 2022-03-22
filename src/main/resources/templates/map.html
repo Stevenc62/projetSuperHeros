@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Carte</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin="">
+    </script>
+</head>
+
+
+<body onload="init()">
+
+    <script th:inline="javascript">
+    function init() {
+
+        const incidentLocation = {
+            lat : [[${incidentLatitude}]],
+            lng : [[${incidentLongitude}]]
+        }
+
+
+        const zoomLevel = 10;
+
+        const map = L.map("mapid").setView([incidentLocation.lat, incidentLocation.lng], zoomLevel);
+
+        const mainLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoiY2Fwb3JhbGNyb3NzIiwiYSI6ImNsMHp3Z2hjYTA3Ym4zam14ajU2MXhleTIifQ.ozFjJnwSjobFguV-132VKw'
+        });
+        mainLayer.addTo(map);
+
+        var latitude = [[${incidentLatitude}]];
+        var longitude = [[${incidentLongitude}]];
+
+        const kilometerCircle = L.circle([latitude,longitude], {
+            radius:25000,
+            color: 'green',
+            opacity:0.5
+        });
+
+        kilometerCircle.addTo(map);
+
+        [# th:each="hero : ${heroes}"]
+        - console.log("Loading " + [[${hero.pseudo}]] + "!");
+        var heroId = [[${hero.id}]];
+        var heroPseudo = [[${hero.pseudo}]];
+        var heroTel = [[${hero.tel}]];
+        var heroLongitude = [[${hero.longitude}]];
+        var heroLatitude = [[${hero.latitude}]];
+        var heroMarkerCoords = L.marker([heroLongitude,heroLatitude])
+        var heroMarkerCoordsToString = "" + heroLongitude + "," + heroLatitude + "" ;
+
+        var heroMarker = "heroMarker";
+        console.log ("heroMarker = " + heroMarker);
+        console.log ("heroId = " + heroId);
+        console.log ("heroCoords = " + heroMarkerCoordsToString);
+        console.log ("heroMarkerCoords = " + heroMarkerCoords);
+        console.log("var " + heroMarker + heroId + " = " + heroMarkerCoords +";")
+
+        eval('var ' + heroMarker + heroId + '= ' + "heroMarkerCoords" + ';');
+
+        console.log(heroMarker + heroId + ".addTo(map);");
+
+        eval (heroMarker + heroId + ".addTo(map);");
+        eval (heroMarker + heroId + ".bindPopup(\"<h8>\" + heroPseudo + \"</h8></br><h8>\" + heroTel + \"</h8>\");");
+            [/]
+    }
+    </script>
+
+    <div style="height: 46vw; width: 100vw" id="mapid"></div>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page des Super Heroes</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<h3><a th:href="@{/}">Accueil</a></h3>
+
+<div class="text-center m-auto mt-5 mb-5">
+    <h1><a class="text-dark text-decoration-underline" th:href="@{/ajout_hero}">Rejoins les Super Heroes !</a></h1>
+</div>
+
+<div class="display-10">
+    <div class="d-flex justify-content-center">
+        <table style="width: 95vw" class="table table-sm table-bordered mx-2 table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th class="col-auto text-center" >Id :</th>
+                <th class="col-auto text-center" >Pseudo :</th>
+                <th class="col-auto text-center" >Tel :</th>
+                <th class="col-3 text-center" >Accidents traitable :</th>
+                <th class="col-2 text-center">Address :</th>
+                <th class="col-auto text-center">Code Postal :</th>
+                <th class="col-auto text-center">Ville :</th>
+                <th class="col-auto text-center">Country :</th>
+                <th class="col-1 text-center">Latitude :</th>
+                <th class="col-1 text-center">Longitude :</th>
+            </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="hero : ${heroes}">
+                    <tr>
+                        <td class="text-center align-middle">[[${hero.id}]]</td>
+                        <td class="text-center align-middle">[[${hero.pseudo}]]</td>
+                        <td class="text-center align-middle">[[${hero.tel}]]</td>
+                        <td class="text-center align-middle">[[${hero.realisableIncidents}]]</td>
+                        <td class="text-center align-middle">[[${hero.address}]]</td>
+                        <td class="text-center align-middle">[[${hero.code_postal}]]</td>
+                        <td class="text-center align-middle">[[${hero.ville}]]</td>
+                        <td class="text-center align-middle">[[${hero.country}]]</td>
+                        <td class="text-center align-middle">[[${hero.latitude}]]</td>
+                        <td class="text-center align-middle">[[${hero.longitude}]]</td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+</body>
+</html>

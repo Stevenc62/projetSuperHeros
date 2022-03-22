@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajout d'un Heros</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div>
+
+    <h1 class="text-center text-dark mt-3 mb-5 fw-bold">Formulaire pour super Hero</h1>
+
+    <form class="form-control w-50 mx-auto" th:object="${hero}" method="post" th:action="@{/submit}">
+        <div class="mx-5 my-3">
+
+            <label> Pseudo : </label>
+            <input class="form-control" type="text" th:field="*{pseudo}">
+            <label> Tel : </label>
+            <input class="form-control" type="tel" th:field="*{tel}">
+            <label> Address : </label>
+            <input class="form-control" type="text" th:field="*{address}">
+            <label> Code Postal : </label>
+            <input class="form-control" type="text" th:field="*{code_postal}">
+            <label> Ville : </label>
+            <input class="form-control" type="text" th:field="*{ville}">
+            <label> Country : </label>
+            <input class="form-control" type="text" th:field="*{country}">
+            <label>Latitude : </label>
+            <input class="form-control" type="text" th:field="*{latitude}">
+            <label>Longitude : </label>
+            <input class="form-control" type="text" th:field="*{longitude}">
+
+            <div>
+                <h5 class="text-center text-secondary my-3">Accidents traiter :</h5>
+
+                <script type="text/javascript">
+                    function onlyThreeCheckBox() {
+                        var checkboxgroup = document.getElementById('checkboxgroup').getElementsByTagName("input");
+                        var limit = 3;
+                        for (var i = 0; i < checkboxgroup.length; i++) {
+                            checkboxgroup[i].onclick = function() {
+                                var checkedcount = 0;
+                                for (var i = 0; i < checkboxgroup.length; i++) {
+                                    checkedcount += (checkboxgroup[i].checked) ? 1 : 0;
+                                }
+                                if (checkedcount > limit) {
+                                    console.log("You can select maximum of " + limit + " checkbox.");
+                                    alert("You can select maximum of " + limit + " checkbox.");
+                                    this.checked = false;
+                                }
+                            }
+                        }
+                    }
+                </script>
+
+                <div class="form-control row">
+                    <div class="d-flex flex-wrap" id="checkboxgroup">
+                        <th:block th:each="incident : ${incidents}">
+                            <div class="w-50">
+                                <input name="check[]" class="mx-2" type="checkbox" th:field="*{realisableIncidents}" th:text="${incident.type}" th:value="${incident.id}">
+                            </div>
+                        </th:block>
+                    </div>
+                    <script type="text/javascript">
+                        onlyThreeCheckBox()
+                    </script>
+                </div>
+
+            </div>
+
+            <div class="mt-5 d-flex flex-box justify-content-around">
+                <button class="btn btn-primary w-25" type="submit">Envoyer</button>
+                <a class="btn btn-secondary w-25" type="button" th:href="@{/heroes}">Retour</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
