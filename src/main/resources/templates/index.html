@@ -6,8 +6,17 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 <body>
-<h1><a th:href="@{/creer_accident}">Report Accidents</a></h1>
-<br/>
-<h2><a th:href="@{/heroes}">Super Heros</a></h2>
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenue</h1>
+    <p>Vous etes bien sur SuperSite</p>
+    <p>Vous avez acces à deux parties sur notre site :</p>
+</div>
+
+<ul>
+    <li><h2><a th:href="@{/creer_accident}">Report Accidents</a></h2></li>
+    <br/>
+    <li><h2><a th:href="@{/heroes}">Super Heros</a></h2></li>
+</ul>
 </body>
 </html>
